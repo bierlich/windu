@@ -1,0 +1,34 @@
+OUTPUT = $(PROGRAM)
+TEMPLS = $(shell python $(COMMON)dictwriter.py templ)
+BASEOBJS = $(shell python $(COMMON)dictwriter.py objs)
+BASEOBJS += $(LOCOBJS)
+DEPS = $(TEMPLS) $(TEMPLS:.h=.hxx)
+MINUITWRAPPER =../minuit/
+MINUIT = $(MINUITWRAPPER)Minuit2-5.28.00/
+GSL = /scratch/galette/bierlich/tools/gsl/
+#COMPILERS
+CC=gcc
+CXX = g++-v4.8.0
+
+#LIBS AND OPTIONS
+CCXOPTS=-g -ansi -O2 -Wall -fopenmp -std=c++11
+INCS = -I$(COMMON) -I$(MINUIT)inc -I$(GSL)include
+LIBTOOLLIB=$(MINUIT)src/libMinuit2.la
+
+#OTHER
+RM = rm -rf
+
+#LINKING
+all: $(PROGRAM).o $(BASEOBJS) $(TEMPLS) $(TEMPLS:.h=.hxx)
+	libtool --tag=CXX --mode=link g++ -g -ansi -O2 -Wall -fopenmp -L$(GSL)lib -lgsl -lgslcblas -L/usr/local/lib -o $(OUTPUT) $(PROGRAM).o $(BASEOBJS) $(LIBTOOLLIB)
+
+$(PROGRAM).o: $(PROGRAM).cxx $(BASEOBJS) $(TEMPLS) $(TEMPLS:.h=.hxx)
+	$(CXX) $(CCXOPTS) $(INCS) -c $< -o $@
+
+%.o: %.cxx %.h $(TEMPLS) $(TEMPLS:.h=.hxx)
+	$(CXX) $(CCXOPTS) $(INCS) -c $< -o $@
+
+clean:
+	@echo "Cleaning $(PROGRAM)..." 
+	$(RM) $(OUTPUT) *.o
+	$(RM) $(COMMON)*.o
