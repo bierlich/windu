@@ -7,4 +7,5 @@
 #include "EventList.h"
 //#include "Chi2Function.h"
 //#include "AbsFunction.h"
-//#include "objs.h"
+#include "Rndm.h"
+#include "objs.h"

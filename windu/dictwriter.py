@@ -1,7 +1,7 @@
 import sys
 
 ch = sys.argv[1]
-com = '../panf/'
+com = '/scratch/galette/bierlich/tools/windu/windu/'
 
 if ch=="objs":
 	objects = open(com+'objs.h','r')

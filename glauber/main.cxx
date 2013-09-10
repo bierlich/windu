@@ -2,7 +2,6 @@
 #include "EmptyParticle.h"
 #include "GlauberEventPar.h"
 #include "GlauberChi2.h"
-#include "MinuitWrapper.h"
 #include "Rndm.h"
 #include <chrono>
 #include <iostream>
@@ -26,7 +25,7 @@ int sample_cdf(Rndm * r, Hist * cdf){
 
 int main(){
     auto t1 = chrono::high_resolution_clock::now();
-    EventList<GlauberEvent> * el = new EventList<GlauberEvent>("../Glauber/glauber_pbpb.tuple");
+    EventList<GlauberEvent> * el = new EventList<GlauberEvent>("/scratch/galette/bierlich/mc/Glauber/glauber_pbpb.tuple");
     // parameter initialisation
     double f = 0.806;
     double mu = 29.003;
@@ -50,39 +49,7 @@ int main(){
 		nparticles->Fill(nfs);
 	}
 	delete el;
-	auto quan = nparticles->GetHistCalc()->Quantiles({0.,1.});
-	*nparticles/=nparticles->GetHistCalc()->Integral();
-	nparticles->SetInfoString("log");
 
-	nparticles->DrawSimple("test.xml");
-
-	GlauberChi2 chi2("chi2",nparticles,"../Glauber/glauber_pbpb.tuple",log_p_neg_bin,sample_cdf,r);
-	MinuitWrapper mw(&chi2);
-	mw.AddPar("f",.5,0.2,0.1,1.);
-	mw.AddPar("k",1.,0.2,0.,5);
-	mw.AddPar("mu",25.,0.5,10.,50);
-
-	auto res = mw.Minos();
-	for(auto m : res ){
-		cout << m.first << " " << m.second << endl;
-	}
-	/*el->Clear();
-	for(auto &ev : *el){
-		int nanc = f*ev.GetPar()->npart+(1-f)*ev.GetPar()->ncoll;
-		int nfs = 0;
-		for(int i=0;i<nanc;++i){
-			nfs+=sample_cdf(r,cdf);
-		}
-		if(nfs>=quan[0]->GetLedge()&&nfs<quan[1]->GetRedge()){
-			impact.Fill(ev.GetPar()->b);
-		}
-	}
-	nparticles/=nparticles.GetHistCalc()->Integral();
-	nparticles.SetInfoString("log");
-	nparticles.DrawSimple("hist.xml");
-*/
-    delete cdf;
-    delete r;
     auto t2 = chrono::high_resolution_clock::now();
 	cout  << chrono::duration_cast<chrono::milliseconds>(t2-t1).count() << " milliseconds\n";	
     

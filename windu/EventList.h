@@ -40,6 +40,7 @@ private:
 			tmpevent.Clean();
 			++ncount;
 		}
+
 		if(_is.eof()){
 			_is.close();
 			return true;
@@ -86,7 +87,7 @@ public:
 		_block = 1;
 	}
 
-	EventList(string input, int mem=100000) {
+	EventList(string input, int mem=10000000) {
 		_input = input;
 		_is.open(_input);
 		if(!_is) cout << "Problem opening " << _input << endl;
@@ -155,21 +156,29 @@ public:
 				return _node!=other._node;
 			}
 			Iterator& operator++(){
-				if(_node){
+				if(_node==_node->_elist->_last){
+					_node = _node->_elist->_empty;
+				}
+				else{
+					_node = _node->_next;
+
+				}
+				/*if(_node){
 					if(_node==_node->_elist->_last){
+						cout << "!! 1" << endl;
 						if(_node->_elist->FillFromInput(_node->getVal())){
+							cout << "!! 2" << endl;
 							_node = _node->_next;
-							return *this;
+							 return *this;
 						}
 						else{
+							cout << "!! 3" << endl;
 					//		cout << "Filling again" << endl;
 							_node = _node->_elist->_root;
 							return *this;
 						}
-					}
-				_node = _node->_next;
-				}	
-
+					}*/
+				//}	
 				return *this;
 			}
 			Etype& operator*(){

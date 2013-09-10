@@ -1,7 +1,7 @@
 #ifndef __HistVec__
 #define __HistVec__
 
-#include "../common/AbsHistVec.h"
+#include "AbsHistVec.h"
 #include <istream>
 #include <string>
 #include <stdlib.h>
