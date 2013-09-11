@@ -70,14 +70,6 @@ def fetch(filename):
 			bins = True
 		elif line.find("</bins>")>-1:
 			bins = False
-		elif line.find("<width>")>-1:
-			width = True
-		elif line.find("</width>")>-1:
-			width = False
-		elif line.find("<ledge>")>-1:
-			ledge = True
-		elif line.find("</ledge>")>-1:
-			ledge = False
 		elif hist and meta:
 			if line.find("<title=")>-1:
 				title = line[line.find("\"")+1:line.rfind("\"")]
@@ -92,10 +84,10 @@ def fetch(filename):
 				if tmp == "true":
 					variableWidth = True
 		elif hist and bins:
-			if ledge:
-				ledges.append(float(line.strip()))
-			elif width:
-				widths.append(float(line.strip()))
+			elif line.find("<ledge=")>-1:
+				ledges.append(float(line[line.find("\"")+1:line.rfind("\"")]))
+			elif line.find("<width=")>-1:
+				width.append(float(line[line.find("\"")+1:line.rfind("\"")]))
 			elif line.find("<sum_of_weights=")>-1:
 				sow.append(float(line[line.find("\"")+1:line.rfind("\"")]))
 			elif line.find("<sum_of_weights_squared=")>-1:

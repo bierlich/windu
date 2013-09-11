@@ -142,6 +142,31 @@ private:
 
 template<class TX>
 friend ostream& operator<< (ostream& aStream, const Bin<TX>& aBin);
+template<class TX>
+friend istream& operator>> (istream& aStream, const Bin<TX>& aBin);
+
+struct support_operation {
+	template<class T>
+	static auto test_write(T * p) -> decltype(std::cout << *p, std::true_type());
+
+	template<class>
+	static auto test_write(...) -> std::false_type;
+
+	template<class T>
+	static auto test_read(T * p) -> decltype(std::cin >> *p, std::true_type());
+
+	template<class>
+	static auto test_read(...) -> std::false_type;
+};
+
+template<class T>
+struct test_write : decltype(support_operation::test_write<T>(0))
+{};
+
+template<class T>
+struct test_read : decltype(support_operation::test_read<T>(0))
+{};
+
 };
 	#include "Bin.hxx"
 #endif

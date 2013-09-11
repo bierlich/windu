@@ -1,0 +1,58 @@
+
+<info>
+process = glauber
+nucl1 = Au
+nucl2 = Pb
+ppxsec = 42 variables = b npart ncoll
+</info>
+<event>
+4.95284 283 756
+<particles>
+</particles>
+</event>
+<event>
+14.9533 7 6
+<particles>
+</particles>
+</event>
+<event>
+12.7034 18 20
+<particles>
+</particles>
+</event>
+<event>
+13.5059 7 5
+<particles>
+</particles>
+</event>
+<event>
+8.70768 105 217
+<particles>
+</particles>
+</event>
+<event>
+12.813 13 11
+<particles>
+</particles>
+</event>
+<event>
+14.2833 3 2
+<particles>
+</particles>
+</event>
+<event>
+8.63503 135 263
+<particles>
+</particles>
+</event>
+<event>
+5.71607 234 681
+<particles>
+</particles>
+</event>
+<event>
+13.3605 11 8
+<particles>
+</particles>
+</event>
+
