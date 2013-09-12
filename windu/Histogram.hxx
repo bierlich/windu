@@ -357,7 +357,7 @@ ostream& operator<< (ostream& aStream, Histogram<TX>& aHist){
 	aStream << "\t\t<info=\"" << aHist.GetInfoString() << "\">" << endl;
 	aStream << "\t</meta>\n\t<bins>" << endl;
 	for(Bin<TX> &b : aHist._bins){
-		aStream << "\t\t<bin>\n" << b << "\n\t\t</bin>" << endl;
+		aStream << b << endl;
 	}
 	aStream << "\t</bins>\n</histogram>" << endl;
 
@@ -366,6 +366,70 @@ ostream& operator<< (ostream& aStream, Histogram<TX>& aHist){
 
 template<class TX>
 istream& operator>> (istream& aStream, Histogram<TX>& aHist){
+	string line;
+	string buf;
+	int nbins_control;
 	
+	while(line.find("<histogram>") == string::npos){
+		getline(aStream,line);
+		if(!aStream.good()) return aStream;
+	}	
+	while(line.find("<meta>") == string::npos){
+		getline(aStream,line);
+		if(!aStream.good()) return aStream;
+	}	
+	
+	while(line.find("<title=") == string::npos){
+		getline(aStream,line);
+		if(!aStream.good()) return aStream;
+	}
+	buf = line.substr(line.find("=")+2,line.find(">")-line.find("=")-3);
+	cout << buf << endl;
+	aHist._title = buf;
+	
+	while(line.find("<type=") == string::npos){
+		getline(aStream,line);
+		if(!aStream.good()) return aStream;
+	}
+	buf = line.substr(line.find("=")+2,line.find(">")-line.find("=")-3);
+	cout << buf << endl;
+	if(aHist.GetTypeName()!=buf) cout << "Warning! typename of initialized histogram is \"" << aHist.GetTypeName() <<
+		"\" while typename of the histogram read from stream is \"" << buf << "\". Make sure everything is initialized correct!" << endl;
+	
+	while(line.find("<nbins=") == string::npos){
+		getline(aStream,line);
+		if(!aStream.good()) return aStream;
+	}
+	buf = line.substr(line.find("=")+2,line.find(">")-line.find("=")-3);
+	nbins_control = stoi(buf);
+
+	while(line.find("<variableWidth=") == string::npos){
+		getline(aStream,line);
+		if(!aStream.good()) return aStream;
+	}
+	buf =line.substr(line.find("=")+2,line.find(">")-line.find("=")-3);
+	aHist._variableWidth = (buf=="true" ? true : false);
+
+	while(line.find("<info=") == string::npos){
+		getline(aStream,line);
+		if(!aStream.good()) return aStream;
+	}
+	buf = line.substr(line.find("=")+2,line.find(">")-line.find("=")-3);
+	aHist._infostring = buf;
+	while(line.find("</meta>") == string::npos){
+		getline(aStream,line);
+		if(!aStream.good()) return aStream;
+	}	
+	while(line.find("<bins>") == string::npos){
+		getline(aStream,line);
+		if(!aStream.good()) return aStream;
+	}
+
+	Bin<TX> tmpbin;
+	while(aStream >> tmpbin){
+
+	}
+
+
 	return aStream;
 }

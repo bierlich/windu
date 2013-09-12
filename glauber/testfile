@@ -1,0 +1,39 @@
+<histogram>
+	<meta>
+		<title="hist">
+		<type="double">
+		<nbins="4">
+		<variableWidth="false">
+		<info="fjollol">
+	</meta>
+	<bins>
+		<bin>
+			<sum_of_weights="0">
+ 			<sum_of_weights_squared="0">
+ 			<ledge="0">
+			<width="1">
+
+		</bin>
+		<bin>
+			<sum_of_weights="1">
+ 			<sum_of_weights_squared="1">
+ 			<ledge="1">
+			<width="1">
+
+		</bin>
+		<bin>
+			<sum_of_weights="1">
+ 			<sum_of_weights_squared="1">
+ 			<ledge="2">
+			<width="1">
+
+		</bin>
+		<bin>
+			<sum_of_weights="1">
+ 			<sum_of_weights_squared="1">
+ 			<ledge="3">
+			<width="1">
+
+		</bin>
+	</bins>
+</histogram>
