@@ -425,10 +425,10 @@ istream& operator>> (istream& aStream, Histogram<TX>& aHist){
 		if(!aStream.good()) return aStream;
 	}
 
-	Bin<TX> tmpbin;
-	while(aStream >> tmpbin){
+	//Bin<TX> tmpbin;
+	//while(aStream >> tmpbin){
 
-	}
+	//}
 
 
 	return aStream;

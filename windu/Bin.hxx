@@ -1,5 +1,5 @@
-template<class TX, class ... TY>
-ostream& operator<< (ostream& aStream, const Bin<TX> &aBin){
+template<class TX>
+ostream& operator<< (ostream& aStream, const Bin<TX>& aBin){
 	aStream << "\t\t<bin>\n";
 	aStream << "\t\t\t<sum_of_weights=\"" << aBin._w << "\">\n ";
 	aStream << "\t\t\t<sum_of_weights_squared=\"" << aBin._w2 << "\">\n ";
@@ -9,8 +9,8 @@ ostream& operator<< (ostream& aStream, const Bin<TX> &aBin){
 	return aStream;
 }
 
-template<class TX, class ... TY>
-istream& operator>> (istream& aStream, Bin<TX>& aBin){
+template<class TX>
+istream& operator>> (istream& aStream, const Bin<TX>& aBin){
 	string line;
 	string buf;
 	while(line.find("<bin>") == string::npos){
@@ -38,7 +38,7 @@ istream& operator>> (istream& aStream, Bin<TX>& aBin){
 		if(!aStream.good()) return aStream;
 	}
 	buf = line.substr(line.find("=")+2,line.find(">")-line.find("=")-3);
-	aBin._ledge = buf.length() == 0 ? 0. : stod(buf);
+	aBin._v = buf.length() == 0 ? 0. : stod(buf);
 	
 	while(line.find("<width=") == string::npos){
 		getline(aStream,line);

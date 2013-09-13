@@ -11,8 +11,8 @@ CXX = g++-v4.8.0
 
 #LIBS AND OPTIONS
 CCXOPTS=-g -ansi -O2 -Wall -fopenmp -std=c++11
-INCS = -I$(COMMON) -I$(MINUIT)inc -I$(GSL)include
-LIBTOOLLIB=$(MINUIT)src/libMinuit2.la
+INCS = -I$(COMMON) -I$(GSL)include
+#LIBTOOLLIB=$(MINUIT)src/libMinuit2.la
 
 #OTHER
 RM = rm -rf

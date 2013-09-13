@@ -3,8 +3,7 @@ TEMPLS = $(shell python $(COMMON)dictwriter.py templ)
 BASEOBJS = $(shell python $(COMMON)dictwriter.py objs)
 BASEOBJS += $(LOCOBJS)
 DEPS = $(TEMPLS) $(TEMPLS:.h=.hxx)
-MINUITWRAPPER =../minuit/
-MINUIT = $(MINUITWRAPPER)Minuit2-5.28.00/
+MINUIT = $(MINUIT_PATH)
 GSL = $(GSL_PATH)
 #COMPILERS
 CC=gcc

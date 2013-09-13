@@ -12,7 +12,7 @@
 using namespace std;
 
 
-template <class axisVar, class ... transformer>
+template <class axisVar>
 class Bin{
 public:
 	Bin(){
@@ -140,9 +140,9 @@ private:
 	double _w, _w2;
 	axisVar _v, _width;
 
-template<class TX, class ... TY>
+template<class TX>
 friend ostream& operator<< (ostream& aStream, const Bin<TX>& aBin);
-template<class TX, class ... TY>
+template<class TX>
 friend istream& operator>> (istream& aStream, const Bin<TX>& aBin);
 
 
