@@ -5,7 +5,7 @@ ostream& operator<< (ostream& aStream, const Bin<TX> &aBin){
 	aStream << "\t\t\t<sum_of_weights_squared=\"" << aBin._w2 << "\">\n ";
 	aStream << "\t\t\t<ledge=\"" << aBin._v << "\">\n";
 	aStream << "\t\t\t<width=\"" << aBin._width << "\">\n";
-	aStream << << "\n\t\t</bin>";
+	aStream << "\n\t\t</bin>";
 	return aStream;
 }
 
