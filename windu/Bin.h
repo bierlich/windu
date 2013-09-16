@@ -32,7 +32,7 @@ public:
 	}
 
 	Bin<axisVar> EmptyClone(){
-		Bin b(0,0,_v,_width);
+		Bin<axisVar> b(0,0,_v,_width);
 		return b;
 	}
 	void Fill(double w){
@@ -74,20 +74,20 @@ public:
 		_w2 = w2;
 	}
 
-	Bin operator + (Bin other){
-		Bin tmp(_w + other.GetSOW(), 
+	Bin<axisVar> operator + (Bin other){
+		Bin<axisVar> tmp(_w + other.GetSOW(), 
 				_w2 + other.GetSOW2(), _v, _width);
 		return tmp;
 	}
 
-	Bin operator - (Bin other){
-		Bin tmp(_w - other.GetSOW() > 0 ? _w - other.GetSOW() : 0,
+	Bin<axisVar> operator - (Bin other){
+		Bin<axisVar> tmp(_w - other.GetSOW() > 0 ? _w - other.GetSOW() : 0,
 				_w2 - other.GetSOW2() > 0 ? _w2 - other.GetSOW2() : 0,
 				_v, _width);
 		return tmp;
 	}
 
-	Bin operator / (Bin other){
+	Bin<axisVar> operator / (Bin other){
 		if(other.GetSOW()==0){
 			cout << "WARNING: Divide by zero!" << endl;
 		}
@@ -101,38 +101,39 @@ public:
 		return tmp;
 	}
 
-	Bin operator * (Bin other){
-		Bin tmp(_w*other.GetSOW(),_w2+other.GetSOW2(), _v,_width);
+	Bin<axisVar> operator * (Bin other){
+		Bin<axisVar> tmp(_w*other.GetSOW(),_w2+other.GetSOW2(), _v,_width);
 		return tmp;
 	}
 
-	Bin operator + (double other){
-		Bin tmp(_w + other, _w2 + other*other, _v, _width);
+	Bin<axisVar> operator + (double other){
+		Bin<axisVar> tmp(_w + other, _w2 + other*other, _v, _width);
 		return tmp;
 	}
 
-	Bin operator - (double other){
-		Bin tmp(_w - other > 0 ? _w - other : 0,
+	Bin<axisVar> operator - (double other){
+		Bin<axisVar> tmp(_w - other > 0 ? _w - other : 0,
 				_w2 - other*other > 0 ? _w2 - other*other : 0,
 				_v, _width);
 		return tmp;
 	}
 
-	Bin operator / (double other){
+	Bin<axisVar> operator / (double other){
 		if(other==0){
 			cout << "WARNING: Divide by zero!" << endl;
 		}
 		double tmpw = other==0 ? 0 : _w/other;
 		double tmpw2 = other==0 ? 0 : _w2/other/other;
-		Bin tmp(tmpw, tmpw2, _v, _width);
+		Bin<axisVar> tmp(tmpw, tmpw2, _v, _width);
 
 		return tmp;
 	}
 
-	Bin operator * (double other){
-		Bin tmp(_w*other, _w2*other*other, _v,_width);
+	Bin<axisVar> operator * (double other){
+		Bin<axisVar> tmp(_w*other, _w2*other*other, _v,_width);
 		return tmp;
 	}
+
 
 protected:
 
@@ -141,10 +142,9 @@ private:
 	axisVar _v, _width;
 
 template<class TX>
-friend ostream& operator<< (ostream& aStream, const Bin<TX>& aBin);
+friend ostream& operator<< (ostream& aStream, Bin<TX>& aBin);
 template<class TX>
-friend istream& operator>> (istream& aStream, const Bin<TX>& aBin);
-
+friend istream& operator>> (istream& aStream, Bin<TX>& aBin);
 
 };
 	#include "Bin.hxx"

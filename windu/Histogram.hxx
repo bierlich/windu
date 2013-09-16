@@ -7,14 +7,14 @@ Histogram<axisVar>::Histogram(){
 
 template <typename axisVar>
 Histogram<axisVar>::Histogram(string title, int nbins, axisVar min, axisVar max){
-	if(nbins<1) cerr << "Cannot initialize histogram without any bins!" << endl;
+	if(nbins<1) cerr << "Cannot initialize histogram without any bins!" << "\n";
 	_title = title;
 	_variableWidth = false;
 	_bins.clear();
 	hPtr.reset();
 	axisVar stepsize = (max-min)/nbins;
 	for(int i=0;i<nbins;++i){
-		Bin <axisVar> tmp(0,0,min+i*stepsize,stepsize);
+		Bin <axisVar> tmp(0,0,min+(i*stepsize),stepsize);
 		_bins.push_back(tmp);
 	}
 }
@@ -156,6 +156,11 @@ void Histogram<axisVar>::SetTitle(string newTitle){
 }
 
 template <typename axisVar>
+void Histogram<axisVar>::SetVariableWidth(bool isVariable){
+	_variableWidth = isVariable;
+}
+
+template <typename axisVar>
 bool Histogram<axisVar>::TestCompatibility(Histogram other){
 	return true;
 }
@@ -164,7 +169,7 @@ template <typename axisVar>
 Histogram<axisVar> Histogram<axisVar>::operator + (Histogram<axisVar>& other){
 		auto tmp = EmptyClone(_title);
 		if(!TestCompatibility(other)){
-			cerr << "Add: Not Compatible" << endl;
+			cerr << "Add: Not Compatible" << "\n";
 			return tmp;
 		}
 		auto itr1 = begin();
@@ -181,7 +186,7 @@ template <typename axisVar>
 Histogram<axisVar> Histogram<axisVar>::operator - (Histogram<axisVar>& other){
 		auto tmp = EmptyClone(_title);
 		if(!TestCompatibility(other)){
-			cerr << "Subtract: Not Compatible" << endl;
+			cerr << "Subtract: Not Compatible" << "\n";
 			return tmp;
 		}
 		auto itr1 = begin();
@@ -198,7 +203,7 @@ template <typename axisVar>
 Histogram<axisVar> Histogram<axisVar>::operator * (Histogram<axisVar>& other){
 		auto tmp = EmptyClone(_title);
 		if(!TestCompatibility(other)){
-			cerr << "Multiply: Not Compatible" << endl;
+			cerr << "Multiply: Not Compatible" << "\n";
 			return tmp;
 		}
 		auto itr1 = begin();
@@ -215,7 +220,7 @@ template <typename axisVar>
 Histogram<axisVar> Histogram<axisVar>::operator / (Histogram<axisVar>& other){
 		auto tmp = EmptyClone(_title);
 		if(!TestCompatibility(other)){
-			cerr << "Divide: Not Compatible" << endl;
+			cerr << "Divide: Not Compatible" << "\n";
 			return tmp;
 		}
 		auto itr1 = begin();
@@ -231,7 +236,7 @@ Histogram<axisVar> Histogram<axisVar>::operator / (Histogram<axisVar>& other){
 template <typename axisVar>
 void Histogram<axisVar>::operator += (Histogram<axisVar>& other){
 		if(!TestCompatibility(other)){
-			cerr << "Add: Not Compatible" << endl;
+			cerr << "Add: Not Compatible" << "\n";
 		}
 		auto itr = other.begin();
 		for(Bin<axisVar> &b : _bins){
@@ -243,7 +248,7 @@ void Histogram<axisVar>::operator += (Histogram<axisVar>& other){
 template <typename axisVar>
 void Histogram<axisVar>::operator -= (Histogram<axisVar>& other){
 		if(!TestCompatibility(other)){
-			cerr << "Subtract: Not Compatible" << endl;
+			cerr << "Subtract: Not Compatible" << "\n";
 		}
 		auto itr = other.begin();
 		for(Bin<axisVar> &b : _bins){
@@ -255,7 +260,7 @@ void Histogram<axisVar>::operator -= (Histogram<axisVar>& other){
 template <typename axisVar>
 void Histogram<axisVar>::operator *= (Histogram<axisVar>& other){
 		if(!TestCompatibility(other)){
-			cerr << "Multiply: Not Compatible" << endl;
+			cerr << "Multiply: Not Compatible" << "\n";
 		}
 		auto itr = other.begin();
 		for(Bin<axisVar> &b : _bins){
@@ -267,7 +272,7 @@ void Histogram<axisVar>::operator *= (Histogram<axisVar>& other){
 template <typename axisVar>
 void Histogram<axisVar>::operator /= (Histogram<axisVar>& other){
 		if(!TestCompatibility(other)){
-			cerr << "Divide: Not Compatible" << endl;
+			cerr << "Divide: Not Compatible" << "\n";
 		}
 		auto itr = other.begin();
 		for(Bin<axisVar> &b : _bins){
@@ -350,16 +355,16 @@ void Histogram<axisVar>::operator /= (double other){
 
 template<class TX>
 ostream& operator<< (ostream& aStream, Histogram<TX>& aHist){
-	aStream << "<histogram>\n\t<meta>\n\t\t<title=\"" << aHist._title << "\">" << endl;
-	aStream << "\t\t<type=\"" << aHist.GetTypeName() << "\">" << endl;
-	aStream << "\t\t<nbins=\"" << aHist._bins.size() << "\">" << endl;
-	aStream << "\t\t<variableWidth=\"" << (aHist._variableWidth ? "true" : "false") << "\">" << endl;
-	aStream << "\t\t<info=\"" << aHist.GetInfoString() << "\">" << endl;
-	aStream << "\t</meta>\n\t<bins>" << endl;
+	aStream << "<histogram>\n\t<meta>\n\t\t<title=\"" << aHist._title << "\">" << "\n";
+	aStream << "\t\t<type=\"" << aHist.GetTypeName() << "\">" << "\n";
+	aStream << "\t\t<nbins=\"" << aHist._bins.size() << "\">" << "\n";
+	aStream << "\t\t<variableWidth=\"" << (aHist._variableWidth ? "true" : "false") << "\">" << "\n";
+	aStream << "\t\t<info=\"" << aHist.GetInfoString() << "\">" << "\n";
+	aStream << "\t</meta>\n\t<bins>" << "\n";
 	for(Bin<TX> &b : aHist._bins){
-		aStream << b << endl;
+		aStream << b << "\n";
 	}
-	aStream << "\t</bins>\n</histogram>" << endl;
+	aStream << "\t</bins>\n</histogram>" << "\n";
 
 	return aStream;
 }
@@ -384,7 +389,6 @@ istream& operator>> (istream& aStream, Histogram<TX>& aHist){
 		if(!aStream.good()) return aStream;
 	}
 	buf = line.substr(line.find("=")+2,line.find(">")-line.find("=")-3);
-	cout << buf << endl;
 	aHist._title = buf;
 	
 	while(line.find("<type=") == string::npos){
@@ -392,9 +396,8 @@ istream& operator>> (istream& aStream, Histogram<TX>& aHist){
 		if(!aStream.good()) return aStream;
 	}
 	buf = line.substr(line.find("=")+2,line.find(">")-line.find("=")-3);
-	cout << buf << endl;
 	if(aHist.GetTypeName()!=buf) cout << "Warning! typename of initialized histogram is \"" << aHist.GetTypeName() <<
-		"\" while typename of the histogram read from stream is \"" << buf << "\". Make sure everything is initialized correct!" << endl;
+		"\" while typename of the histogram read from stream is \"" << buf << "\". Make sure everything is initialized correct!" << "\n";
 	
 	while(line.find("<nbins=") == string::npos){
 		getline(aStream,line);
@@ -425,11 +428,20 @@ istream& operator>> (istream& aStream, Histogram<TX>& aHist){
 		if(!aStream.good()) return aStream;
 	}
 
-	//Bin<TX> tmpbin;
-	//while(aStream >> tmpbin){
+	Bin<TX> tmpbin;
+	while(aStream >> tmpbin){
+		aHist._bins.push_back(tmpbin);
+	
+	}
+	
+	while(line.find("</bins>") == string::npos){
+		getline(aStream,line);
+		if(!aStream.good()) return aStream;
+	}
 
-	//}
-
+	if(nbins_control!=aHist._bins.size()){
+		cout << "Warning! Size of the histogram I read is not equal to the size stated in header!" << "\n";
+	}
 
 	return aStream;
 }

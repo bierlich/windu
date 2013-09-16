@@ -13,10 +13,12 @@
 #include <algorithm>
 #include <cxxabi.h>
 #include <fstream>
+#include <utility>
 
 using namespace std;
 template<class T>
 class HistCalc;
+
 
 template <typename axisVar=double>
 class Histogram{
@@ -42,6 +44,7 @@ public:
 	string GetTypeName();
 	void SetInfoString(string info);
 	void SetTitle(string newTitle);
+	void SetVariableWidth(bool isVariable);
 	Histogram<axisVar> operator + (Histogram<axisVar>& other);
 	Histogram<axisVar> operator - (Histogram<axisVar>& other);
 	Histogram<axisVar> operator * (Histogram<axisVar>& other);
@@ -59,10 +62,51 @@ public:
 	void operator *= (double other);
 	void operator /= (double other);
 
+	template<typename unit>
+	auto operator * (unit u) -> Histogram<decltype(u*declval<axisVar>())>{
+		vector<decltype(u*declval<axisVar>())> ledges;
+		for(auto bin : _bins){
+			ledges.push_back(bin.GetLedge()*u);
+		}
+		auto bPtr = --_bins.end();
+		ledges.push_back(bPtr->GetLedge()*u+bPtr->GetWidth()*u);
+
+		Histogram<decltype(u*declval<axisVar>())> ret(_title,ledges);
+		auto tItr = begin();
+		for(auto& bin : ret){
+			bin.SetSOW(tItr->GetSOW());
+			bin.SetSOW2(tItr->GetSOW2());
+			++tItr;
+		}
+		ret.SetVariableWidth(_variableWidth);
+		ret.SetInfoString(_infostring);
+		return ret;
+	}
+
+	template<typename unit>
+	auto operator / (unit u) -> Histogram<decltype(u/declval<axisVar>())>{
+		vector<decltype(u/declval<axisVar>())> ledges;
+		for(auto bin : _bins){
+			ledges.push_back(bin.GetLedge()/u);
+		}
+		auto bPtr = --_bins.end();
+		ledges.push_back(bPtr->GetLedge()/u+bPtr->GetWidth()/u);
+
+		Histogram<decltype(u/declval<axisVar>())> ret(_title,ledges);
+		auto tItr = begin();
+		for(auto& bin : ret){
+			bin.SetSOW(tItr->GetSOW());
+			bin.SetSOW2(tItr->GetSOW2());
+			++tItr;
+		}
+		ret.SetVariableWidth(_variableWidth);
+		ret.SetInfoString(_infostring);
+		return ret;
+	}
+
 protected:
 private:
 	
-	void SetVariableWidth(bool isVariable);
 	bool TestCompatibility(Histogram other);
 	string _title;
 	string _infostring;
@@ -75,6 +119,7 @@ template<class TY>
 friend istream& operator>> (istream& aStream, Histogram<TY>& aHist);
 template<class TX>
 friend ostream& operator<< (ostream& aStream, Histogram<TX>& aHist);
+
 };
 	#include "Histogram.hxx"
 

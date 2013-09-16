@@ -1,25 +1,23 @@
+
 #include "Windu.h"
+#include "Units.h"
+#include <sstream>
+#include <string>
 
-int main() {
-	Histogram<double> h("h",4,0,4);
-	h.Fill(1);
-	h.Fill(2);
-	h.Fill(3);
 
-	ofstream out("testfile.xml");
 
-	out << h;
+int main(){
 
-	out.close();
+	Histogram<Length> h("h",3,0*meter,3*meter);
+	h.Fill(1*meter);
+	h.Fill(2*meter);
+	stringstream ss;
 
-	ifstream in("testfile.xml");
+	auto l = h/meter;
+	ss << l << endl;
+	string s;
+	ss >> s;
+	cout << s << endl;
+	return 1;
 
-	Histogram<double> g;
-
-	in >> g;
-
-	in.close();
-
-	cout << g << endl;
- 
 }
