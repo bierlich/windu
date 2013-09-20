@@ -54,7 +54,7 @@ private:
 
 	bool FillFromInput(){
 		long int ncount = 0;
-		_root.reset();
+		//		_root.reset();
 		Etype tmpevent;
 		while(_is >> tmpevent&&ncount!=_block){
 			push_back(tmpevent);

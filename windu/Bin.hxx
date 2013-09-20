@@ -1,10 +1,10 @@
-template<class TX>
-ostream& operator<< (ostream& aStream, Bin<TX>& aBin){
+template<typename TX>
+ostream& operator<< (ostream& aStream, const Bin<TX>& aBin){
 	aStream << "\t\t<bin>\n";
-	aStream << "\t\t\t<sum_of_weights=\"" << aBin._w << "\">\n ";
-	aStream << "\t\t\t<sum_of_weights_squared=\"" << aBin._w2 << "\">\n ";
-	aStream << "\t\t\t<ledge=\"" << aBin._v << "\">\n";
-	aStream << "\t\t\t<width=\"" << aBin._width << "\">\n";
+	aStream << "\t\t\t<sum_of_weights=\"" << aBin.GetSOW() << "\">\n ";
+	aStream << "\t\t\t<sum_of_weights_squared=\"" << aBin.GetSOW2() << "\">\n ";
+	aStream << "\t\t\t<ledge=\"" << aBin.GetLedge() << "\">\n";
+	aStream << "\t\t\t<width=\"" << aBin.GetWidth() << "\">\n";
 	aStream << "\n\t\t</bin>";
 	return aStream;
 }

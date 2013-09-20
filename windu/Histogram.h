@@ -40,8 +40,8 @@ public:
 	string GetTitle();
 	shared_ptr<Bin<axisVar>> GetUnderflow();
 	shared_ptr<HistCalc<axisVar>> GetHistCalc();
-	string GetInfoString();
-	string GetTypeName();
+	string GetInfoString() const;
+	string GetTypeName() const;
 	void SetInfoString(string info);
 	void SetTitle(string newTitle);
 	void SetVariableWidth(bool isVariable);
@@ -118,7 +118,7 @@ private:
 template<class TY>
 friend istream& operator>> (istream& aStream, Histogram<TY>& aHist);
 template<class TX>
-friend ostream& operator<< (ostream& aStream, Histogram<TX>& aHist);
+friend ostream& operator<< (ostream& aStream, const Histogram<TX>& aHist);
 
 };
 	#include "Histogram.hxx"

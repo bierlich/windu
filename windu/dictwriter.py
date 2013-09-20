@@ -1,8 +1,8 @@
 import sys
 
 ch = sys.argv[1]
-#com = '/scratch/galette/bierlich/tools/windu/windu/'
-com = '../windu/'
+com = '/scratch/galette/bierlich/tools/windu/windu/'
+#com = '../windu/'
 if ch=="objs":
 	objects = open(com+'objs.h','r')
 	for line in objects:

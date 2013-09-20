@@ -22,7 +22,7 @@ Histogram<axisVar> HistCalc<axisVar>::CDFHist(string opt = ""){
 	return ret;
 }
 template <typename axisVar>
-typename vector<Bin<axisVar> >::iterator HistCalc<axisVar>::FindFirstAbove(double sow){
+typename vector<Bin<axisVar> >::iterator HistCalc<axisVar>::FindFirstAbove(double sow) const{
 	typename vector<Bin<axisVar> >::iterator iter = find_if(hPtr->begin(), hPtr->end(), 
 		[&](Bin<axisVar> b) {return (sow <= b.GetSOW());});
 

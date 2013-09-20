@@ -30,6 +30,8 @@ struct test_read : decltype(support_operation::test_read<T>(0))
 
 #include "Histogram.h"
 #include "HistCalc.h"
+#include "Event.h"
+#include "EventList.h"
 
 #else
 #pragma message "\n---\nWindu requires C++11, but you are compiling using an older standard!\n"\

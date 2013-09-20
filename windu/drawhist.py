@@ -84,10 +84,10 @@ def fetch(filename):
 				if tmp == "true":
 					variableWidth = True
 		elif hist and bins:
-			elif line.find("<ledge=")>-1:
+			if line.find("<ledge=")>-1:
 				ledges.append(float(line[line.find("\"")+1:line.rfind("\"")]))
 			elif line.find("<width=")>-1:
-				width.append(float(line[line.find("\"")+1:line.rfind("\"")]))
+				widths.append(float(line[line.find("\"")+1:line.rfind("\"")]))
 			elif line.find("<sum_of_weights=")>-1:
 				sow.append(float(line[line.find("\"")+1:line.rfind("\"")]))
 			elif line.find("<sum_of_weights_squared=")>-1:
@@ -109,8 +109,10 @@ elif sys.argv[1].find("-r")<0:
 		if True:
 			centers = map(lambda x, y: x+ 0.5*y, h.ledges, h.widths)
 			yerr = map(lambda x: math.sqrt(x), h.sow2)
-			if h.info.find("log") > -1:
-				ax.set_yscale("log")	
+			if h.info.find("logy") > -1:
+				ax.set_yscale("log")
+			if h.info.find("logx") > -1:
+				ax.set_xscale("log")	
 			ax.errorbar(centers, h.sow, yerr=yerr, fmt='o')
 			ax.set_title("GG")
 	

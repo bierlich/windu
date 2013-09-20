@@ -20,11 +20,7 @@ public:
 		_w2 = 0;
 	}
 
-	Bin(double w, double w2, axisVar v, axisVar width){
-		_w = w;
-		_w2 = w2;
-		_v = v;
-		_width = width;
+	Bin(double w, double w2, axisVar v, axisVar width): _w(w), _w2(w2), _v(v), _width(width) {
 	}
 
 	~Bin(){
@@ -40,27 +36,27 @@ public:
 		_w2+=w*w;
 	}
 
-	axisVar GetCenter(){
+	axisVar GetCenter() const {
 		return _v+_width/2;
 	}
 
-	axisVar GetLedge(){
+	axisVar GetLedge() const {
 		return _v;
 	}
 
-	axisVar GetRedge(){
+	axisVar GetRedge() const {
 		return _v+_width;
 	}
 
-	double GetSOW(){
+	double GetSOW() const {
 		return _w;
 	}
 
-	double GetSOW2(){
+	double GetSOW2() const {
 		return _w2;
 	}
 
-	axisVar GetWidth(){
+	axisVar GetWidth() const {
 		return _width;
 	}
 
@@ -141,8 +137,9 @@ private:
 	double _w, _w2;
 	axisVar _v, _width;
 
-template<class TX>
-friend ostream& operator<< (ostream& aStream, Bin<TX>& aBin);
+
+//template<class TX>
+//friend ostream& operator<< (ostream& aStream, const Bin<TX>& aBin);
 template<class TX>
 friend istream& operator>> (istream& aStream, Bin<TX>& aBin);
 

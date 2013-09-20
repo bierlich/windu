@@ -6,9 +6,8 @@ Histogram<axisVar>::Histogram(){
 }
 
 template <typename axisVar>
-Histogram<axisVar>::Histogram(string title, int nbins, axisVar min, axisVar max){
+Histogram<axisVar>::Histogram(string title, int nbins, axisVar min, axisVar max) : _title(title) {
 	if(nbins<1) cerr << "Cannot initialize histogram without any bins!" << "\n";
-	_title = title;
 	_variableWidth = false;
 	_bins.clear();
 	hPtr.reset();
@@ -20,8 +19,7 @@ Histogram<axisVar>::Histogram(string title, int nbins, axisVar min, axisVar max)
 }
 
 template <typename axisVar>
-Histogram<axisVar>::Histogram(string title, vector<axisVar> edges){
-	_title = title;
+Histogram<axisVar>::Histogram(string title, vector<axisVar> edges) : _title(title) {
 	_variableWidth = true;
 	hPtr.reset();
 	for(auto v = edges.begin();v!=edges.end()-1;++v){
@@ -130,12 +128,12 @@ shared_ptr<HistCalc<axisVar>> Histogram<axisVar>::GetHistCalc(){
 }
 
 template <typename axisVar>
-string Histogram<axisVar>::GetInfoString(){
+string Histogram<axisVar>::GetInfoString() const {
 	return _infostring;
 }
 
 template <typename axisVar>
-string Histogram<axisVar>::GetTypeName(){
+string Histogram<axisVar>::GetTypeName() const {
 	char *realname;
 	int status;
 	const type_info & ti = typeid(axisVar);
@@ -354,14 +352,14 @@ void Histogram<axisVar>::operator /= (double other){
 }
 
 template<class TX>
-ostream& operator<< (ostream& aStream, Histogram<TX>& aHist){
+ostream& operator<< (ostream& aStream, const Histogram<TX>& aHist){
 	aStream << "<histogram>\n\t<meta>\n\t\t<title=\"" << aHist._title << "\">" << "\n";
 	aStream << "\t\t<type=\"" << aHist.GetTypeName() << "\">" << "\n";
 	aStream << "\t\t<nbins=\"" << aHist._bins.size() << "\">" << "\n";
 	aStream << "\t\t<variableWidth=\"" << (aHist._variableWidth ? "true" : "false") << "\">" << "\n";
 	aStream << "\t\t<info=\"" << aHist.GetInfoString() << "\">" << "\n";
 	aStream << "\t</meta>\n\t<bins>" << "\n";
-	for(Bin<TX> &b : aHist._bins){
+	for(auto b : aHist._bins){
 		aStream << b << "\n";
 	}
 	aStream << "\t</bins>\n</histogram>" << "\n";
@@ -431,7 +429,6 @@ istream& operator>> (istream& aStream, Histogram<TX>& aHist){
 	Bin<TX> tmpbin;
 	while(aStream >> tmpbin){
 		aHist._bins.push_back(tmpbin);
-	
 	}
 	
 	while(line.find("</bins>") == string::npos){

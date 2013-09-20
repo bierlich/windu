@@ -94,11 +94,18 @@ template<int l, int e>
         return lhs._raw==rhs._raw;
     }
 
+template<int l, int e>
+    bool operator!= (Qty<l,e> lhs, Qty<l,e> rhs){
+        return lhs._raw!=rhs._raw;
+    }
 template<>
     class Qty<0,0>{
         public:
     Qty(double raw = 1.) : _raw(raw) {
 
+    }
+    operator double() {
+     return _raw;   
     }
     double _raw;
 
@@ -106,11 +113,11 @@ template<>
 
     private:
 
-    friend ostream& operator<< (ostream& aStream, Qty<0,0>& aQty);
+   // friend ostream& operator<< (ostream& aStream, Qty<0,0>& aQty);
 
     };
 
-ostream& operator << (ostream& aStream, Qty<0,0>& aQty){
+ostream& operator << (ostream& aStream, const Qty<0,0>& aQty){
             aStream << aQty._raw;
             return aStream;
         }
