@@ -30,6 +30,7 @@ public:
 	//Histogram(Histogram& other) = default;
 	Histogram(string title, int nbins, axisVar min, axisVar max);
 	Histogram(string title, vector<axisVar> edges);
+	void AddOverflow();
 	typename vector<Bin<axisVar> >::iterator begin();
 	void DrawSimple(string filename="hist.xml",string opt="");
 	Histogram<axisVar> EmptyClone(string title);

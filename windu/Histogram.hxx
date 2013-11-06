@@ -38,6 +38,11 @@ typename vector<Bin<axisVar> >::iterator Histogram<axisVar>::begin(){
 	return _bins.begin();
 }
 
+template<typename axisVar>
+void Histogram<axisVar>::AddOverflow(){
+	_bins.back()+=_overflow;
+}
+
 template <typename axisVar>
 void Histogram<axisVar>::DrawSimple(string filename, string opt){
 	ofstream of;
@@ -177,6 +182,9 @@ Histogram<axisVar> Histogram<axisVar>::operator + (Histogram<axisVar>& other){
 			++itr1;
 			++itr2;
 		}
+		tmp._overflow = this->_overflow + other._overflow;
+		tmp._underflow = this->_underflow + other._underflow;
+
 	return tmp;
 }
 
@@ -194,6 +202,10 @@ Histogram<axisVar> Histogram<axisVar>::operator - (Histogram<axisVar>& other){
 			++itr1;
 			++itr2;
 		}
+		tmp._overflow = this->_overflow - other._overflow;
+		tmp._underflow = this->_underflow - other._underflow;
+
+
 	return tmp;
 }
 
@@ -211,6 +223,11 @@ Histogram<axisVar> Histogram<axisVar>::operator * (Histogram<axisVar>& other){
 			++itr1;
 			++itr2;
 		}
+
+		tmp._overflow = this->_overflow * other._overflow;
+		tmp._underflow = this->_underflow * other._underflow;
+
+
 	return tmp;
 }
 
@@ -228,6 +245,11 @@ Histogram<axisVar> Histogram<axisVar>::operator / (Histogram<axisVar>& other){
 			++itr1;
 			++itr2;
 		}
+
+		tmp._overflow = this->_overflow / other._overflow;
+		tmp._underflow = this->_underflow / other._underflow;
+
+
 	return tmp;
 }
 
@@ -241,6 +263,9 @@ void Histogram<axisVar>::operator += (Histogram<axisVar>& other){
 			b = b+*itr;
 			++itr;
 		}
+		_overflow+=other._overflow;
+		_underflow+=other._underflow;
+
 }
 
 template <typename axisVar>

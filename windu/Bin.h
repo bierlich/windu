@@ -130,6 +130,10 @@ public:
 		return tmp;
 	}
 
+	void operator += (Bin other){
+		_w += other.GetSOW();
+		_w2+= other.GetSOW2();
+	}
 
 protected:
 
